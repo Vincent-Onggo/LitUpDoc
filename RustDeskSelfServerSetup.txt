@@ -1,0 +1,13 @@
+Step 1: Create VM Instance in Google Cloud. Change the server to run on Ubuntu LTS.
+Step 2: SSH into the VM through GCP platform.
+Step 3: Install docker into the VM. 
+```
+sudo curl -L "https://github.com/docker/compose/releases/download/<version>/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+```
+Step 4: Write the docker compose file https://github.com/rustdesk/rustdesk-server/blob/063b4543682815bbd6fa329f3c977c00c6b1475f/docker-compose.yml#L33. Make sure private keys are in both hbbs and hbbr
+Step 5: Open firewall ports tcp 21114-21119 and udp 21116
+Step 6: To restart: sudo docker-compose down -> sudo docker-compose up -d -> sudo docker ps (to see running processes)
+Step 7: relay should be 21117 and id server should be 21116.
+Step 8: Make sure to add /r after the id
