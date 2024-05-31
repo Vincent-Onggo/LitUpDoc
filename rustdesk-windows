@@ -1,0 +1,6 @@
+1. Use template from github liho00
+2. Change to public ip and change the paths to hbbs and hbbr to be absolute. docker-compose up | docker-compose down | docker ps
+3. Do port forwarding and hairpin nat on the router. 
+4. Allow ports to pass through inbound and outbound in windows defender firewall.
+5. Print out public key using cat id_2259.id and put it in the rustdesk parameters.
+6. id server is: ip:21116 |  relay server is ip:21117  |  paste public key into the key param
