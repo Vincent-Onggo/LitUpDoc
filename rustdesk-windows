@@ -1,6 +1,102 @@
-1. Use template from github liho00
-2. Change to public ip and change the paths to hbbs and hbbr to be absolute. docker-compose up | docker-compose down | docker ps
-3. Do port forwarding and hairpin nat on the router. 
-4. Allow ports to pass through inbound and outbound in windows defender firewall.
-5. Print out public key using cat id_2259.id and put it in the rustdesk parameters.
-6. id server is: ip:21116 |  relay server is ip:21117  |  paste public key into the key param
+===================================================
+             RustDesk Server Setup using Docker
+===================================================
+
+This guide will walk you through setting up a RustDesk server using Docker,
+updating it to use your public IP, configuring the necessary paths, and 
+setting up port forwarding and firewall rules.
+
+Prerequisites:
+--------------
+- Docker installed on your machine
+- Access to your router for port forwarding and hairpin NAT configuration
+- Administrator access to Windows Defender Firewall settings
+
+Steps:
+------
+
+1. Clone the RustDesk Server Template from GitHub
+-------------------------------------------------
+First, clone the repository from GitHub:
+
+   git clone https://github.com/liho00/rustdesk-server-docker-template.git
+   cd rustdesk-server-docker-template
+
+2. Update Docker Compose Configuration
+--------------------------------------
+Open the `docker-compose.yml` file and make the following changes:
+
+- Change to Public IP: Update the `PUBLIC_IP` environment variable to your public IP address.
+- Use Absolute Paths for hbbs and hbbr: Update the paths to hbbs and hbbr to absolute paths.
+
+```yaml
+version: '3.8'
+
+services:
+  hbbs:
+    image: rustdesk/rustdesk-server:latest
+    container_name: hbbs
+    environment:
+      - PUBLIC_IP=<your-public-ip>
+    volumes:
+      - /absolute/path/to/hbbs:/root
+    ports:
+      - "21114:21114"
+      - "21116:21116"
+    restart: unless-stopped
+
+  hbbr:
+    image: rustdesk/rustdesk-server:latest
+    container_name: hbbr
+    volumes:
+      - /absolute/path/to/hbbr:/root
+    ports:
+      - "21115:21115"
+      - "21117:21117"
+    restart: unless-stopped
+Run Docker Containers
+Start the RustDesk server containers:
+
+docker-compose up -d
+
+To stop the containers, use:
+
+docker-compose down
+
+To check the status of the containers, use:
+
+docker ps
+
+Configure Port Forwarding and Hairpin NAT on Your Router
+Log in to your router and configure port forwarding for the following ports:
+
+ID Server (hbbs): Forward external port 21116 to internal port 21116 on the server's local IP address.
+Relay Server (hbbr): Forward external port 21117 to internal port 21117 on the server's local IP address.
+Enable hairpin NAT (also known as NAT loopback) to allow devices within your local network to access the server using the public IP address.
+
+Allow Ports Through Windows Defender Firewall
+Open Windows Defender Firewall settings and allow inbound and outbound traffic for the following ports:
+
+21114
+21115
+21116
+21117
+To do this:
+
+Open Control Panel > System and Security > Windows Defender Firewall.
+Click on "Advanced settings".
+Add new inbound and outbound rules for each port mentioned above.
+Retrieve and Use the Public Key
+Print out the public key using the following command:
+
+cat id_2259.id
+
+Copy the public key.
+
+Update the RustDesk parameters with the public key. This can typically be done in the RustDesk client settings where you specify the ID and relay server details:
+
+ID Server: <your-public-ip>:21116
+Relay Server: <your-public-ip>:21117
+Public Key: Paste the copied public key into the key parameter.
+===================================================
+End of RustDesk Server Setup Guide
