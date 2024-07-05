@@ -106,5 +106,6 @@ Maintenance:
 Start Server: docker-compose up -d
 Stop Server: docker-compose down
 Check Server Status: docker ps
+Change Server: Disable and Enable the repective port forwarding and masquerade rules in Web Config -> IP -> Firewall -> NAT. 10.10.20.50 (Laptop) 10.10.20.12 (Pi) 
 
 IF ADMIN ACCESS ISSUES: Use sudo docker-compose up -d
