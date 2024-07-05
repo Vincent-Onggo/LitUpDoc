@@ -100,3 +100,11 @@ Relay Server: <your-public-ip>:21117
 Public Key: Paste the copied public key into the key parameter.
 ===================================================
 End of RustDesk Server Setup Guide
+
+
+Maintenance:
+Start Server: docker-compose up -d
+Stop Server: docker-compose down
+Check Server Status: docker ps
+
+IF ADMIN ACCESS ISSUES: Use sudo docker-compose up -d
